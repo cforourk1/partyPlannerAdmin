@@ -152,16 +152,34 @@ removeParty(selectedParty.id)
 }
 
 function newPartyForm() {
-const $form = document.createElement
-
-
-
-
-
-
-
-
+const $form = document.createElement("form");
+$form.innerHTML = `
+    <label>
+      Name
+      <input name="name" required />
+    </label>
+        <label>
+      Description
+      <input description="description" required />
+          </label>
+    <label>
+      Date
+      <input date="date" required />
+    </label>
+    <label>
+    Location
+    <input location="location required />
+    </label>
+    `;
+    $form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const data = new FormData(event.target)
+  addParty(({name: data.get("name"), description: (data.get("description")), date: data.get("date"), location: data.get("location")}));
+ })
+  return $form;
 }
+
+
 
 
 
@@ -209,6 +227,7 @@ function render() {
 }
 
 async function init() {
+  await getParty();
   await getParties();
   await getRsvps();
   await getGuests();
