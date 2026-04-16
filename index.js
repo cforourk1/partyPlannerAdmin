@@ -173,6 +173,7 @@ $form.innerHTML = `
     Location
     <input name="location" required />
     </label>
+    <button>Add party</button> 
     `;
     $form.addEventListener('submit', (event) => {
   event.preventDefault();
