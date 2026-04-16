@@ -138,11 +138,15 @@ function SelectedParty() {
     <address>${selectedParty.location}</address>
     <p>${selectedParty.description}</p>
     <GuestList></GuestList>
+
+    <h5>Warning! Once you delete a party, it cannot be recovered</h5>
+   <button>Delete party</button>
+
   `;
   $party.querySelector("GuestList").replaceWith(GuestList());
 
   // button to delete the party
-const $button= $artist.querySelector("button")
+const $button= $party.querySelector("button")
 $button.addEventListener('click', () => {
 removeParty(selectedParty.id)
 })
