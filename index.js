@@ -32,6 +32,42 @@ async function getParty(id) {
     console.error(e);
   }
 }
+/**
+ *@param {Party} - creates a new party via API
+ *  POST req to add a new party
+*/
+
+async function addParty(party) {
+  try {
+  await fetch(API, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(party)
+  });
+  await getParty();
+} catch (e) {
+  console.error(e)
+}
+render();
+}
+
+/**
+ * deletes a party with a given ID via the API
+ * @param {string | number} id (string holds party - the thing I need to look at, the array and then the number will be the id and that will be the specific party I am deleting
+ * */
+
+async function removeParty(id) {
+  try {
+  await fetch(API + "/" + id, {
+  method: "DELETE",
+  });
+selectedParty = undefined
+await getParty();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 
 /** Updates state with all RSVPs from the API */
 async function getRsvps() {
@@ -105,8 +141,30 @@ function SelectedParty() {
   `;
   $party.querySelector("GuestList").replaceWith(GuestList());
 
+  // button to delete the party
+const $button= $artist.querySelector("button")
+$button.addEventListener('click', () => {
+removeParty(selectedParty.id)
+})
+
+
   return $party;
 }
+
+function newPartyForm() {
+const $form = document.createElement
+
+
+
+
+
+
+
+
+}
+
+
+
 
 /** List of guests attending the selected party */
 function GuestList() {
@@ -126,6 +184,7 @@ function GuestList() {
   $ul.replaceChildren(...$guests);
 
   return $ul;
+
 }
 
 // === Render ===
