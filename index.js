@@ -39,16 +39,15 @@ async function getParty(id) {
 
 async function addParty(party) {
   try {
-  await fetch(API, {
+  await fetch(API + "/events", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(party)
   });
-  await getParty();
+  await getParties();
 } catch (e) {
   console.error(e)
 }
-render();
 }
 
 /**
@@ -58,11 +57,11 @@ render();
 
 async function removeParty(id) {
   try {
-  await fetch(API + "/" + id, {
+  await fetch(API + "/events/" + id, {
   method: "DELETE",
   });
 selectedParty = undefined
-await getParty();
+await getParties();
   } catch (e) {
     console.error(e);
   }
@@ -164,28 +163,25 @@ $form.innerHTML = `
     </label>
         <label>
       Description
-      <input description="description" required />
+      <input name="description" required />
           </label>
     <label>
       Date
-      <input date="date" required />
+      <input name="date" type="date" required />
     </label>
     <label>
     Location
-    <input location="location required />
+    <input name="location" required />
     </label>
     `;
     $form.addEventListener('submit', (event) => {
   event.preventDefault();
   const data = new FormData(event.target)
-  addParty(({name: data.get("name"), description: (data.get("description")), date: data.get("date"), location: data.get("location")}));
+  const isoDate = new Date(data.get("date")).toISOString()
+  addParty(({name: data.get("name"), description: (data.get("description")), date: isoDate, location: data.get("location")}));
  })
   return $form;
 }
-
-
-
-
 
 
 /** List of guests attending the selected party */
@@ -223,15 +219,19 @@ function render() {
         <h2>Party Details</h2>
         <SelectedParty></SelectedParty>
       </section>
+    <section>
+    <h3>Add a New Party</h3>
+    <newPartyForm></newPartyForm>
+    </section>
     </main>
   `;
 
   $app.querySelector("PartyList").replaceWith(PartyList());
   $app.querySelector("SelectedParty").replaceWith(SelectedParty());
+  $app.querySelector("newPartyForm").replaceWith(newPartyForm());
 }
 
 async function init() {
-  await getParty();
   await getParties();
   await getRsvps();
   await getGuests();
