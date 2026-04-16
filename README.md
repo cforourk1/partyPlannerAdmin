@@ -31,11 +31,17 @@ The starter code for this workshop is the solution to the previous workshop! Rea
 Your submission should meet the following requirements:
 
 - `index.html` is not modified. All elements are generated via JS.
+
 - The application renders a form where users can input the name, description, date, and location of a new party.
+
 - The application is able to create a new party via a POST request to the API.
+
 - The application renders a delete button for the selected party.
+
 - The application is able to remove the selected party via a DELETE request to the API.
+
 - The application is rerendered whenever state changes.
+
 - UI elements are organized into component functions.
 
 ## Submission
